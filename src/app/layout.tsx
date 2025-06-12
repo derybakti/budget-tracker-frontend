@@ -10,8 +10,12 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Budget Tracker + AI Financial Advisor",
-  description: "Budget Tracker",
+	title: "Budget Tracker + AI Financial Advisor",
+	description: "Budget Tracker",
+	viewport: {
+		width: "device-width",
+		initialScale: 1.0,
+	},
 };
 
 export default function RootLayout({
