@@ -19,7 +19,7 @@ export default function TransactionPage() {
 	const [search, setSearch] = useState("");
 	const [transaction, setTransaction] = useState<Transaction[]>([]);
 	const [page, setPage] = useState(1);
-	const [limit] = useState(10);
+	const [limit] = useState(6);
 	const [totalPages, setTotalPages] = useState(1);
 	const [stats, setStats] = useState({ total_expense: 0, count: 0 });
 	const [modal, setModal] = useState<ModalProps | null>(null);
