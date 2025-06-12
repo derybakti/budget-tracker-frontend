@@ -81,7 +81,7 @@ const AuthPage = () => {
 
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-100 px-14 py-8 md:py-0">
-			<div className="grid grid-cols-1 md:grid-cols-2 w-full min-h-[90vh] md:min-h-[80vh] bg-white rounded-lg shadow-2xl overflow-hidden `">
+			<div className="grid grid-cols-1 md:grid-cols-2 w-full min-h-[60vh] md:min-h-[80vh] bg-white rounded-lg shadow-2xl overflow-hidden `">
 				<div className="p-8 md:p-8 lg:p-24 flex flex-col max-h-[90vh] md:max-h-[80vh] justify-center">
 					<h2 className="text-3xl font-bold mb-2 text-gray-800">
 						{isLogin ? "Sign In" : "Sign Up"}

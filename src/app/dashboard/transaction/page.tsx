@@ -121,79 +121,187 @@ export default function TransactionPage() {
 				</Link>
 			</div>
 
-			<div className="bg-white rounded-lg shadow overflow-x-auto">
-				<div className="min-w-full">
-					<table className="w-full text-xs md:text-sm text-left">
-						<thead>
-							<tr className="text-gray-500 border-b">
-								<th className="p-3 ">No</th>
-								<th>Nama</th>
-								<th>Waktu</th>
-								<th>Jumlah</th>
-								<th>Aksi</th>
-							</tr>
-						</thead>
-						<tbody>
-							{transaction.length > 0 ? (
-								transaction.map((transaction, index) => {
-									const tanggal = new Date(transaction.date).toLocaleDateString(
-										"id-ID"
-									);
-									const no = (page - 1) * limit + index + 1;
-									return (
-										<tr
-											key={transaction.id}
-											className="border-t text-gray-700"
-										>
-											<td className="p-4">{no}</td>
-											<td className="">
-												<div className="font-semibold">
-													{transaction.category.name}
-												</div>
-												<div className="text-xs">{transaction.note}</div>
-											</td>
-											<td className="">{tanggal}</td>
-											<td
-												className={`font-medium ${
-													transaction.type === "expense"
-														? "text-red-500"
-														: "text-green-500"
-												}`}
-											>
-												{transaction.type === "expense" ? "- " : "+ "}
-												{FormatRupiah(transaction.amount)}
-											</td>
-											<td className="">
-												<div className="flex items-center gap-4">
-													<Link
-														href={`/dashboard/transaction/edit/${transaction.id}`}
-														className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 cursor-pointer"
-													>
-														<FaEdit />
-													</Link>
-													<button
-														onClick={() => handleDelete(transaction.id)}
-														className="px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-600 cursor-pointer"
-													>
-														<FaTrash />
-													</button>
-												</div>
-											</td>
-										</tr>
-									);
-								})
-							) : (
-								<tr className="border-t text-gray-700">
-									<td
-										className="p-4 text-center"
-										colSpan={5}
-									>
-										Tidak ada transaksi
-									</td>
+			<div className="w-full">
+				{/* Desktop Table View */}
+				<div className="hidden md:block bg-white rounded-lg shadow overflow-x-auto">
+					<div className="min-w-full">
+						<table className="w-full text-sm text-left">
+							<thead>
+								<tr className="text-gray-500 border-b bg-gray-50">
+									<th className="p-4 font-medium">No</th>
+									<th className="p-4 font-medium">Nama</th>
+									<th className="p-4 font-medium">Waktu</th>
+									<th className="p-4 font-medium">Jumlah</th>
+									<th className="p-4 font-medium">Aksi</th>
 								</tr>
-							)}
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								{transaction.length > 0 ? (
+									transaction.map((transaction, index) => {
+										const tanggal = new Date(
+											transaction.date
+										).toLocaleDateString("id-ID");
+										const no = (page - 1) * limit + index + 1;
+										return (
+											<tr
+												key={transaction.id}
+												className="border-t text-gray-700 hover:bg-gray-50 transition-colors"
+											>
+												<td className="p-4 font-medium text-gray-500">{no}</td>
+												<td className="p-4">
+													<div className="font-semibold text-gray-900">
+														{transaction.category.name}
+													</div>
+													<div className="text-sm text-gray-500 mt-1">
+														{transaction.note}
+													</div>
+												</td>
+												<td className="p-4 text-gray-600">{tanggal}</td>
+												<td
+													className={`p-4 font-semibold ${
+														transaction.type === "expense"
+															? "text-red-500"
+															: "text-green-500"
+													}`}
+												>
+													{transaction.type === "expense" ? "- " : "+ "}
+													{FormatRupiah(transaction.amount)}
+												</td>
+												<td className="p-4">
+													<div className="flex items-center gap-2">
+														<Link
+															href={`/dashboard/transaction/edit/${transaction.id}`}
+															className="p-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+															title="Edit"
+														>
+															<FaEdit className="w-4 h-4" />
+														</Link>
+														<button
+															onClick={() => handleDelete(transaction.id)}
+															className="p-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
+															title="Hapus"
+														>
+															<FaTrash className="w-4 h-4" />
+														</button>
+													</div>
+												</td>
+											</tr>
+										);
+									})
+								) : (
+									<tr className="border-t text-gray-700">
+										<td
+											className="p-8 text-center text-gray-500"
+											colSpan={5}
+										>
+											<div className="flex flex-col items-center">
+												<div className="text-4xl mb-2">📋</div>
+												<div>Tidak ada transaksi</div>
+											</div>
+										</td>
+									</tr>
+								)}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				{/* Mobile Card View */}
+				<div className="md:hidden space-y-3">
+					{transaction.length > 0 ? (
+						transaction.map((transaction, index) => {
+							const tanggal = new Date(transaction.date).toLocaleDateString(
+								"id-ID",
+								{
+									day: "numeric",
+									month: "short",
+									year: "numeric",
+								}
+							);
+							const no = (page - 1) * limit + index + 1;
+
+							return (
+								<div
+									key={transaction.id}
+									className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
+								>
+									{/* Header dengan nomor dan tanggal */}
+									<div className="bg-gray-50 px-4 py-2 flex justify-between items-center">
+										<span className="text-xs font-medium text-gray-500">
+											#{no}
+										</span>
+										<span className="text-xs text-gray-500">{tanggal}</span>
+									</div>
+
+									{/* Content */}
+									<div className="p-4">
+										<div className="flex justify-between items-start mb-3">
+											<div className="flex-1 min-w-0">
+												<h3 className="font-semibold text-gray-900 text-sm leading-tight mb-1">
+													{transaction.category.name}
+												</h3>
+												<p className="text-xs text-gray-500 truncate">
+													{transaction.note}
+												</p>
+											</div>
+
+											<div className="ml-3 text-right flex-shrink-0">
+												<div
+													className={`font-bold text-sm ${
+														transaction.type === "expense"
+															? "text-red-500"
+															: "text-green-500"
+													}`}
+												>
+													{transaction.type === "expense" ? "- " : "+ "}
+													{FormatRupiah(transaction.amount)}
+												</div>
+												<div
+													className={`text-xs px-2 py-1 rounded-full inline-block mt-1 ${
+														transaction.type === "expense"
+															? "bg-red-50 text-red-600"
+															: "bg-green-50 text-green-600"
+													}`}
+												>
+													{transaction.type === "expense"
+														? "Pengeluaran"
+														: "Pemasukan"}
+												</div>
+											</div>
+										</div>
+
+										{/* Actions */}
+										<div className="flex gap-2 pt-3 border-t border-gray-100">
+											<Link
+												href={`/dashboard/transaction/edit/${transaction.id}`}
+												className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors text-sm font-medium"
+											>
+												<FaEdit className="w-3 h-3" />
+												Edit
+											</Link>
+											<button
+												onClick={() => handleDelete(transaction.id)}
+												className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors text-sm font-medium"
+											>
+												<FaTrash className="w-3 h-3" />
+												Hapus
+											</button>
+										</div>
+									</div>
+								</div>
+							);
+						})
+					) : (
+						<div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 text-center">
+							<div className="text-4xl mb-3">📋</div>
+							<div className="text-gray-500 font-medium">
+								Tidak ada transaksi
+							</div>
+							<div className="text-sm text-gray-400 mt-1">
+								Transaksi Anda akan muncul di sini
+							</div>
+						</div>
+					)}
 				</div>
 			</div>
 
