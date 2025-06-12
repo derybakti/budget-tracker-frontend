@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 	description: "Budget Tracker",
 	viewport: {
 		width: "device-width",
-		initialScale: 1.0,
+    initialScale: 1.0,
 	},
 };
 
