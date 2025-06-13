@@ -86,7 +86,7 @@ const AuthPage = () => {
 				<div className="flex flex-col justify-center p-4 sm:p-6">
 					<div className="w-full">
 						<div className="text-center">
-							<h1 className="text-3xl font-bold tracking-tight text-slate-900">
+							<h1 className="text-2xl font-bold tracking-tight text-slate-900">
 								{isLogin ? "Welcome Back!" : "Create an Account"}
 							</h1>
 							<p className="mt-2 text-sm text-slate-600">
@@ -198,6 +198,31 @@ const AuthPage = () => {
 								</div>
 							</div>
 
+							{!isLogin && (
+								<div className="flex items-center">
+									<input
+										ref={termsCheckBoxRef}
+										id="terms"
+										type="checkbox"
+										className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+									/>
+									<label
+										htmlFor="terms"
+										className="ml-2 block text-sm text-gray-700"
+									>
+										I agree to the{" "}
+										<button
+											type="button"
+											className="text-indigo-600 hover:underline"
+											onClick={() => setShowModal(!showModal)}
+										>
+											{" "}
+											Term & Privacy Policy
+										</button>
+									</label>
+								</div>
+							)}
+
 							{/* Tombol Submit */}
 							<div>
 								<button
@@ -288,6 +313,19 @@ const AuthPage = () => {
 					</div>
 				</div>
 			</div>
+
+			{showModal && (
+				<Modal
+					type="information"
+					message="By using this application, you agree to our Terms and Privacy Policy. We may collect usage data to improve your experience. We do not share your data with third parties without your consent. For full details, visit our legal page."
+					onOk={() => {
+						setShowModal(false);
+						if (termsCheckBoxRef.current)
+							termsCheckBoxRef.current.checked = true;
+					}}
+					onCancel={() => setShowModal(false)}
+				/>
+			)}
 		</div>
 	);
 };
