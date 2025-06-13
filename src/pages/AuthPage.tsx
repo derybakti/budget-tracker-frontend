@@ -134,16 +134,21 @@ const AuthPage = () => {
 										>
 											Phone Number
 										</label>
-										<input
-											id="number"
-											type="text"
-											value={formData.number}
-											onChange={(e) =>
-												setFormData({ ...formData, number: e.target.value })
-											}
-											placeholder="you@example.com"
-											className="mt-1 block w-full rounded-lg border-gray-300 bg-slate-50 px-4 py-2.5 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-										/>
+										<div className="relative">
+											<div className="absolute inset-y-0 left-1 flex items-center justify-center pl-3 text-gray-500 text-sm">
+												+62
+											</div>
+											<input
+												id="number"
+												type="text"
+												value={formData.number}
+												onChange={(e) =>
+													setFormData({ ...formData, number: e.target.value })
+												}
+												placeholder="81234567890"
+												className="mt-1 px-12 block w-full rounded-lg border-gray-300 bg-slate-50  py-2.5 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+											/>
+										</div>
 									</div>
 								</div>
 							)}
