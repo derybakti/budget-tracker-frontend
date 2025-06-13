@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
@@ -12,10 +12,13 @@ const poppins = Poppins({
 export const metadata: Metadata = {
 	title: "Budget Tracker + AI Financial Advisor",
 	description: "Budget Tracker",
-	viewport: {
-		width: "device-width",
-    initialScale: 1.0,
-	},
+	
+};
+
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1.0,
+	maximumScale: 1.0,
 };
 
 export default function RootLayout({

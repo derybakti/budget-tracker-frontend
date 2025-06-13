@@ -80,194 +80,213 @@ const AuthPage = () => {
 	};
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-100 px-14 py-8 md:py-0">
-			<div className="grid grid-cols-1 md:grid-cols-2 w-full min-h-[60vh] md:min-h-[80vh] bg-white rounded-lg shadow-2xl overflow-hidden `">
-				<div className="p-8 md:p-8 lg:p-24 flex flex-col max-h-[90vh] md:max-h-[80vh] justify-center">
-					<h2 className="text-3xl font-bold mb-2 text-gray-800">
-						{isLogin ? "Sign In" : "Sign Up"}
-					</h2>
-					<p className="text-gray-600 mb-4">
-						{isLogin ? "Welcome back!" : "Create an account"}
-					</p>
-					<form
-						onSubmit={handleSubmit}
-						className="space-y-2"
-					>
-						{/* keadaan untuk login atau register */}
-						{!isLogin && (
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+		<div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+			<div className="grid w-full max-w-5xl grid-cols-1 overflow-hidden rounded-2xl bg-white shadow-lg md:grid-cols-2">
+				{/* Kolom Form (Kiri) */}
+				<div className="flex flex-col justify-center p-4 sm:p-6">
+					<div className="w-full">
+						<div className="text-center">
+							<h1 className="text-3xl font-bold tracking-tight text-slate-900">
+								{isLogin ? "Welcome Back!" : "Create an Account"}
+							</h1>
+							<p className="mt-2 text-sm text-slate-600">
+								{isLogin
+									? "Don't have an account?"
+									: "Already have an account?"}{" "}
+								<button
+									onClick={() => setType(isLogin ? "register" : "login")}
+									className="font-medium text-blue-600 hover:underline"
+								>
+									{isLogin ? "Sign up" : "Sign in"}
+								</button>
+							</p>
+						</div>
+
+						{/* Form */}
+						<form
+							onSubmit={handleSubmit}
+							className="mt-4 space-y-2"
+						>
+							{!isLogin && (
 								<div>
-									<label
-										htmlFor="name"
-										className="block text-sm text-gray-700"
-									>
-										Full Name
-									</label>
-									<input
-										type="text"
-										value={formData.name}
-										onChange={(e) =>
-											setFormData({ ...formData, name: e.target.value })
-										}
-										placeholder="John Doe"
-										className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 border-gray-300"
-									/>
-								</div>
-								<div>
-									<label
-										htmlFor="number"
-										className="block text-sm  text-gray-700"
-									>
-										Phone Number
-									</label>
-									<div className="relative">
-										<div className="absolute inset-y-0 left-0 flex items-center pl-3 pt-2 pointer-events-none">
-											<span className="text-gray-500 sm:text-sm">+62</span>
-										</div>
+									<div>
+										<label
+											htmlFor="name"
+											className="block text-sm font-medium text-slate-700"
+										>
+											Full Name
+										</label>
 										<input
+											id="name"
+											type="text"
+											value={formData.name}
+											onChange={(e) => {
+												setFormData({ ...formData, name: e.target.value });
+											}}
+											placeholder="John Doe"
+											className="mt-1 block w-full rounded-lg border-gray-300 bg-slate-50 px-4 py-2.5 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+										/>
+									</div>
+									<div>
+										<label
+											htmlFor="number"
+											className="block text-sm font-medium text-slate-700"
+										>
+											Phone Number
+										</label>
+										<input
+											id="number"
 											type="text"
 											value={formData.number}
 											onChange={(e) =>
 												setFormData({ ...formData, number: e.target.value })
 											}
-											placeholder="8xxxxxx"
-											className="w-full px-4 pl-10 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 border-gray-300"
+											placeholder="you@example.com"
+											className="mt-1 block w-full rounded-lg border-gray-300 bg-slate-50 px-4 py-2.5 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
 										/>
 									</div>
 								</div>
-							</div>
-						)}
-						<div>
-							<label
-								htmlFor="email"
-								className="block text-sm font-medium text-gray-700"
-							>
-								Email
-							</label>
-							<input
-								type="email"
-								value={formData.email}
-								onChange={(e) =>
-									setFormData({ ...formData, email: e.target.value })
-								}
-								placeholder="jhondoe@gmail"
-								className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 border-gray-300"
-							/>
-						</div>
-						<div>
-							<label
-								htmlFor="password"
-								className="block text-sm font-medium text-gray-700"
-							>
-								Password
-							</label>
-							<div className="relative">
-								<input
-									type={showPassword ? "text" : "password"}
-									placeholder="password"
-									value={formData.password}
-									onChange={(e) =>
-										setFormData({ ...formData, password: e.target.value })
-									}
-									className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 border-gray-300"
-								/>
-								<button
-									type="button"
-									className="absolute inset-y-0 right-0 pr-3 flex items-center text-xl leading-5 mt-2"
-									onClick={() => setShowPassword(!showPassword)}
-								>
-									{showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-								</button>
-							</div>
-						</div>
+							)}
 
-						{!isLogin && (
-							<div className="flex items-center gap-2">
-								<input
-									ref={termsCheckBoxRef}
-									id="terms"
-									type="checkbox"
-									className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
-								/>
+							<div>
 								<label
-									htmlFor="terms"
-									className="ml-2 text-sm  text-gray-900"
+									htmlFor="email"
+									className="block text-sm font-medium text-slate-700"
 								>
-									I accept{" "}
+									Email Address
+								</label>
+								<input
+									id="email"
+									type="email"
+									value={formData.email}
+									onChange={(e) =>
+										setFormData({ ...formData, email: e.target.value })
+									}
+									placeholder="you@example.com"
+									className="mt-1 block w-full rounded-lg border-gray-300 bg-slate-50 px-4 py-2.5 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+								/>
+							</div>
+							<div>
+								<label
+									htmlFor="password"
+									className="block text-sm font-medium text-slate-700"
+								>
+									Password
+								</label>
+								<div className="relative mt-1">
+									<input
+										id="password"
+										type={showPassword ? "text" : "password"}
+										value={formData.password}
+										onChange={(e) =>
+											setFormData({ ...formData, password: e.target.value })
+										}
+										placeholder="••••••••"
+										className="block w-full rounded-lg border-gray-300 bg-slate-50 px-4 py-2.5 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+									/>
 									<button
 										type="button"
-										onClick={() => setShowModal(!showModal)}
-										className="text-indigo-600 hover:underline cursor-pointer"
+										onClick={() => setShowPassword(!showPassword)}
+										className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500 hover:text-slate-800"
 									>
-										the terms and privacy policy
+										{showPassword ? (
+											<AiOutlineEyeInvisible size={20} />
+										) : (
+											<AiOutlineEye size={20} />
+										)}
 									</button>
-								</label>
+								</div>
 							</div>
-						)}
 
-						{/* {errors.terms && <p className="text-red-500">{errors.terms}</p>} */}
+							{/* Tombol Submit */}
+							<div>
+								<button
+									type="submit"
+									disabled={loading}
+									className="w-full flex justify-center rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+								>
+									<span>
+										{loading
+											? "Processing..."
+											: isLogin
+											? "Sign In"
+											: "Sign Up"}
+									</span>
+								</button>
+							</div>
+						</form>
 
-						<button
-							type="submit"
-							disabled={loading}
-							className={`w-full  py-2 rounded-md bg-indigo-600 text-white ${
-								loading
-									? "opacity-50 cursor-not-allowed"
-									: "hover:bg-indigo-700 transition duration-300 cursor-pointer"
-							}`}
-						>
-							{loading ? (
-								<>
-									<LoadingSpinnerButton />
-									Processing...
-								</>
-							) : isLogin ? (
-								"Sign In"
-							) : (
-								"Sign Up"
-							)}
-						</button>
+						{/* Pemisah "Or" */}
+						<div className="relative my-6">
+							<div
+								className="absolute inset-0 flex items-center"
+								aria-hidden="true"
+							>
+								<div className="w-full border-t border-gray-300" />
+							</div>
+							<div className="relative flex justify-center text-sm">
+								<span className="bg-white px-2 text-slate-500">
+									Or continue with
+								</span>
+							</div>
+						</div>
 
-						<p className="text-sm text-gray-600">
-							{isLogin
-								? "Don't have an account? "
-								: "Already have an account? "}
+						{/* Tombol Social Login */}
+						<div className="grid grid-cols-1 gap-3">
 							<button
 								type="button"
-								className="text-indigo-600 hover:underline cursor-pointer"
-								onClick={() => setType(isLogin ? "register" : "login")}
+								className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-slate-300 bg-white px-5 py-3 font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
 							>
-								{isLogin ? "Sign Up" : "Sign In"}
+								{/* SVG Ikon Google */}
+								<svg
+									className="h-5 w-5"
+									viewBox="0 0 24 24"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+										fill="#4285F4"
+									></path>
+									<path
+										d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+										fill="#34A853"
+									></path>
+									<path
+										d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+										fill="#FBBC05"
+									></path>
+									<path
+										d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+										fill="#EA4335"
+									></path>
+								</svg>
+								<span>Google</span>
 							</button>
-						</p>
-					</form>
+						</div>
+					</div>
 				</div>
-				<div className="hidden md:block bg-indigo-600 relative max-h-[80vh] w-full">
+
+				{/* Kolom Gambar (Kanan) */}
+				<div className="relative hidden md:block">
 					<Image
 						src="/images/auth-img.png"
-						alt="Auth Image"
-						layout="fill"
-						objectFit="cover"
-						className="object-cover"
+						alt="Financial planning"
+						fill
+						sizes="(max-width: 768px) 100vw, 50vw"
 						priority
-					></Image>
-				</div>
-			</div>
-
-			<div>
-				{showModal && (
-					<Modal
-						type="information"
-						message="Terms and Privacy Policy
-						By using our service, you acknowledge that you have read, understand, and agree to be bound by our Terms of Service and Privacy Policy. We do not collect any personal information from you. If you do not agree to these terms, please do not use our service."
-						onOk={() => {
-							setShowModal(false);
-							if (termsCheckBoxRef.current)
-								termsCheckBoxRef.current.checked = true;
-						}}
-						onCancel={() => setShowModal(false)}
+						className="object-cover"
 					/>
-				)}
+					<div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+					<div className="absolute bottom-0 left-0 p-12">
+						<h2 className="text-3xl font-bold leading-tight text-white">
+							Track Your Finances, Shape Your Future.
+						</h2>
+						<p className="mt-2 text-slate-200">
+							Start making smart decisions with your money today.
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
